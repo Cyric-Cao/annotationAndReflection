@@ -1,5 +1,9 @@
 package com.javaAnnotationAndReflect.toKnowReflection;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
+
 /**
  * 反射概述
  */
@@ -18,7 +22,7 @@ public class SummaryOfReflection {
 
         try {
             //1.通过 Class.forName() 方法来获取 Class 对象
-            Class humanClazz = Class.forName("com.javaAnnotationAndReflect.toKnowReflection.User");
+            Class userClazz = Class.forName("com.javaAnnotationAndReflect.toKnowReflection.User");
 
             //2.通过 .class 来获得 Class 对象
             Class strClazz = String.class;
@@ -29,7 +33,45 @@ public class SummaryOfReflection {
             Class aClass = a.getClass();
             System.out.println(aClass == strClazz);
 
-        } catch (ClassNotFoundException e) {
+            //获取类的名称
+            System.out.println("返回是类的全路径加类名:"+userClazz.getName()); //返回是类的全路径加类名
+            System.out.println("返回的只是类名:"+userClazz.getSimpleName()); //返回的只是类名
+
+            //获取属性信息
+//            Field[] fields = userClazz.getFields();  //只能获取public修饰的feild
+            Field[] declaredFields = userClazz.getDeclaredFields(); //获取所有的feild
+            Field userName = userClazz.getDeclaredField("userName");//获取指定的属性名称
+            System.out.println("获取指定的属性名称:"+userName);
+            for (Field field : declaredFields) {
+                System.out.println("获取属性所有信息：" + field);
+                System.out.println("只获取属性名称：" + field.getName());
+            }
+
+            //获取方法信息
+
+            //获取所有的方法
+            Method[] declaredMethods = userClazz.getDeclaredMethods();
+            for (Method method : declaredMethods) {
+                System.out.println("获取方法所有的信息：" + method);
+            }
+            //根据方法名称获取指定的方法
+            Method getUserName = userClazz.getDeclaredMethod("getUserName");
+            //如果方法有参，则必须传递参数类型对应的 class 对象
+            Method getUserName1 = userClazz.getDeclaredMethod("setUserName", String.class);
+
+
+            //获得构造器信息
+
+            //获得所有的构造器
+            Constructor[] declaredConstructors = userClazz.getDeclaredConstructors();
+            for (Constructor c : declaredConstructors) {
+                System.out.println("构造器信息："+c);
+            }
+            //获取指定的构造器
+            Constructor declaredConstructor = userClazz.getDeclaredConstructor(String.class, String.class, int.class);
+            System.out.println("指定构造器："+declaredConstructor);
+            
+        } catch (Exception e) {
             e.printStackTrace();
         }
 

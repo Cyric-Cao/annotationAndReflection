@@ -31,4 +31,13 @@ public class User extends Human{
     public void setMobile(int mobile) {
         this.mobile = mobile;
     }
+
+    public User() {
+    }
+
+    public User(String userName, String address, int mobile) {
+        this.userName = userName;
+        this.address = address;
+        this.mobile = mobile;
+    }
 }
